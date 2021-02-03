@@ -1,6 +1,6 @@
 #lang eopl
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Autores:  Stivens Posada Trujillo, 1556051.  Nelson Galeano  - nn - nn - nn - nn
+;; Autores:  Stivens Posada Trujillo (1556051)  - nn - nn - nn - nn
 ;; fecha de creacion: 28/01/2021
 ;; contrato: calcular-distancia: numero, numero, numero, numero -> numero
 ;; proposito: calcula la distancia entre dos puntos
@@ -10,14 +10,11 @@
 
 ;;CONSTRUCTORES
 
-(define r-vacio
-  (lambda ()
-    (lambda (reg) (eopl:error "no encuentro la variaable " reg))
-      ))
+(define r-vacio '())
 
 
 (define r-novacio
-  (lambda (item reg )
+  (lambda (item reg)
     (list 'r-novacio item reg)))
 
 
@@ -29,27 +26,19 @@
   (lambda (elemento)
     (list 'datoElm elemento)))
 
-                             
-(define lnumvacia
-  (lambda ()
-    (lambda (lstn) (eopl:error "no encuentro la variaable " lstn))
-      ))
+
+(define lnumvacia '())
 
 (define lnumnovacia
   (lambda (num lst)
     (list 'lnumnovacia num lst)))
 
 
-(define lsymvacia
-  (lambda ()
-    (lambda (lsts) (eopl:error "no encuentro la variaable " lsts))
-      ))
+(define lsymvacia '())
 
 (define lsymnovacia
   (lambda (sym lst)
     (list 'lsymnovacia sym lst)))
-
-
 
 
 
@@ -119,11 +108,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;Area del Programador
-
-(define r (r-novacio (itemElm 'a (datoElm 1))(r-novacio (itemElm 'b (datoElm 2))
- (r-novacio (itemElm 'c (datoElm (lnumnovacia 1 (lnumnovacia 2 (lnumnovacia 3 (lnumvacia))))))(r-vacio)))))
-
-
 
 
 (define apply-env
