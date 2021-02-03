@@ -12,9 +12,7 @@
 
 (define r-vacio
   (lambda ()
-    (lambda (reg) (eopl:error "no encuentro la variaable " reg))
-      ))
-
+    '(r-vacio)))
 
 (define r-novacio
   (lambda (item reg )
@@ -32,8 +30,7 @@
                              
 (define lnumvacia
   (lambda ()
-    (lambda (lstn) (eopl:error "no encuentro la variaable " lstn))
-      ))
+    '(lnumvacia)))
 
 (define lnumnovacia
   (lambda (num lst)
@@ -42,8 +39,7 @@
 
 (define lsymvacia
   (lambda ()
-    (lambda (lsts) (eopl:error "no encuentro la variaable " lsts))
-      ))
+    '(lsymvacia)))
 
 (define lsymnovacia
   (lambda (sym lst)
@@ -106,12 +102,15 @@
 
 (define itemElm->key
   (lambda (reg)
-    (caddr reg)))
+    (cadr reg)))
 
 (define itemElm->dato
   (lambda (reg)
     (caddr reg)))
 
+(define datoElm->elemento
+  (lambda (dat)
+    (cadr dat)))
 
 
 
@@ -120,17 +119,20 @@
 
 ;;Area del Programador
 
-(define r (r-novacio (itemElm 'a (datoElm 1))(r-novacio (itemElm 'b (datoElm 2))
- (r-novacio (itemElm 'c (datoElm (lnumnovacia 1 (lnumnovacia 2 (lnumnovacia 3 (lnumvacia))))))(r-vacio)))))
+(define registro1 (r-novacio (itemElm 'a (datoElm 1))
+                     (r-novacio (itemElm 'b (datoElm 2))
+                                 (r-novacio (itemElm 'c (datoElm '(1 2 3)))(r-vacio)))))
+(define registro2
+  (r-vacio ))
 
-
-
-
-(define apply-env
-  (lambda (env sym)
+(define buscar-llave
+  (lambda (registro llave) 
     (cond
-      [(equal? (car env) 'empty-env) (eopl:error "no encuentro la variaable " sym)]
+      [(equal? (r-novacio? registro) r-vacio)
+       (eopl:error "No encuentro el registro")]
       [else
-       (if (eqv? sym(cadr env))
-           (caddr env)
-           (apply-env (cadddr env) sym))])))
+       (if (equal? llave (itemElm->key(r-novacio->item registro)))
+           (datoElm->elemento(itemElm->dato(r-novacio->item registro)))
+           (buscar-llave (r-novacio->reg registro) llave))])))
+      
+
