@@ -1,0 +1,61 @@
+#lang eopl
+
+
+(define-datatype registro registro?
+  (r-vacio)
+  (r-novacio (item item?)
+             (reg registro?)))
+
+
+(define-datatype item item?
+  (itemElm (key symbol?)
+           (dato dato?)))
+
+(define-datatype dato dato?
+  (datoElm (elemento element?)))
+
+(define element?
+  (lambda (x)
+    (cond
+      [(number? x) #true]
+      [(symbol? x) #true]
+      [(lnumero? x) #true]
+      [(lsimbolo? x) #true]
+      [else #false])))
+             
+(define-datatype lnumero lnumero?
+  (lnumvacia)
+  (lnumnovacia (num number?)
+               (lnumero lnumero?)))
+
+(define-datatype lsimbolo lsimbolo?
+  (lsymvacia)
+  (lsymnovacia (sym symbol?)
+               (lsimbolo lsimbolo?)))
+
+(define r
+        (r-novacio (itemElm 'a (datoElm 2))(r-vacio)))
+        
+(define e
+        (r-novacio (itemElm 'r (datoElm (lnumnovacia 8 (lnumnovacia 6 (lnumnovacia 3 (lnumvacia))))))(r-vacio)))
+
+(define c
+        (r-novacio (itemElm 'a (datoElm 1))
+                   (r-novacio (itemElm 'b (datoElm 2))
+                              (r-novacio (itemElm 'c (datoElm (lnumnovacia 1 (lnumnovacia 2 (lnumnovacia 3 (lnumvacia))))))(r-vacio)))))
+
+(define p
+  (r-novacio (itemElm 'c (datoElm (lnumnovacia 1 (lnumnovacia 2 (lnumnovacia 3 (lnumvacia))))))
+             (r-novacio (itemElm 'r (datoElm (lnumnovacia 8 (lnumnovacia 6 (lnumnovacia 3 (lnumvacia))))))(r-vacio))))
+
+(define a
+  (r-novacio (itemElm 'a (datoElm 4))
+             (r-novacio (itemElm 'c (datoElm 5))
+             (r-novacio (itemElm 'r (datoElm (lnumnovacia 8 (lnumnovacia 6 (lnumnovacia 3 (lnumvacia))))))(r-vacio)))))
+
+(define registro2
+  (r-vacio ))
+   
+        
+   
+

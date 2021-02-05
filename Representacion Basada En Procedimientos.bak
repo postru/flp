@@ -1,0 +1,175 @@
+#lang eopl
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Autores:  Stivens Posada Trujillo (1556051)  - nn - nn - nn - nn
+;; fecha de creacion: 28/01/2021
+;; contrato: calcular-distancia: numero, numero, numero, numero -> numero
+;; proposito: calcula la distancia entre dos puntos
+;; ejemplo: (calcular-distancia 3 2 4 5) retorna 3.1622
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Definicion
+
+;;CONSTRUCTORES
+
+(define r-vacio
+  (lambda ()
+    (lambda (sym) (eopl:error "no encuentro  " sym))
+      ))
+
+(define r-novacio
+  (lambda (item reg)
+    (lambda (signal)
+      (cond
+        [(= signal 0) 'r-novacio]
+        [(= signal 1) item ]
+        [(= signal 2) reg]
+        [else (eopl:error "Error en r-novacio")]))))
+
+
+(define itemElm
+  (lambda (key dato)
+    (lambda (signal)
+      (cond
+        [(= signal 0) 'itemElm]
+        [(= signal 1) key ]
+        [(= signal 2) dato]
+        [else (eopl:error "Error en itemElm")]))))
+
+
+
+(define datoElm
+  (lambda (elemento)
+    (lambda (signal)
+      (cond
+        [(= signal 0) 'datoElm]
+        [(= signal 1) elemento ]
+        [else (eopl:error "Error en datoElm")]))))
+
+
+
+(define lnumvacia
+  (lambda ()
+    (lambda (sym) (eopl:error "no encuentro  " sym))
+      ))
+
+
+(define lnumnovacia
+  (lambda (num lst)
+    (lambda (signal)
+      (cond
+        [(= signal 0) 'lnumnovacia]
+        [(= signal 1) num ]
+        [(= signal 2) lst]
+        [else (eopl:error "Error en lnumnovacia")]))))
+
+
+
+(define lsymvacia
+  (lambda ()
+    (lambda (sym) (eopl:error "no encuentro  " sym))
+      ))
+
+
+(define lsymnovacia
+  (lambda (sym lst)
+    (lambda (signal)
+      (cond
+        [(= signal 0) 'lsymnovacia]
+        [(= signal 1) sym ]
+        [(= signal 2) lst]
+        [else (eopl:error "Error en lsymnovacia")]))))
+
+
+
+
+;;Observadores
+
+;;PREDICADOS
+
+(define r-vacio?
+  (lambda (n)
+    (null? n)))
+
+(define r-novacio?
+  (lambda (exp)
+    (equal? (exp 0) 'r-novacio)))
+
+(define itemElm?
+  (lambda (exp)
+    (equal? (exp 0) 'itemElm)))
+
+
+
+(define datoElm?
+  (lambda (exp)
+    (equal? (exp 0) 'datoElm)))
+
+
+(define lnumvacia?
+  (lambda (n)
+    (null? n)))
+
+(define lnumnovacia?
+  (lambda (exp)
+    (equal? (exp 0) 'lnumnovacia)))
+
+
+(define lsymvacia?
+   (lambda (n)
+    (null? n)))
+
+(define lsymnovacia?
+   (lambda (exp)
+    (equal? (exp 0) 'lsymnovacia)))
+
+
+;; EXTRACTORES
+
+(define r-novacio->item
+  (lambda (reg)
+    (reg 1)))
+
+(define r-novacio->reg
+  (lambda (reg)
+    (reg 2)))
+
+(define itemElm->key
+  (lambda (reg)
+    (reg 1)))
+
+(define itemElm->dato
+  (lambda (reg)
+    (reg 2)))
+
+(define datoElm->elemento
+  (lambda (dat)
+    (dat 1)))
+
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;Area del Programador
+
+(define registro1 (r-novacio (itemElm 'a (datoElm 1))
+                     (r-novacio (itemElm 'b (datoElm 2))
+                                 (r-novacio (itemElm 'c (datoElm '(1 2 3)))(r-vacio)))))
+
+(define registro3 (r-novacio (itemElm 'a (datoElm 1))(r-novacio (itemElm 'b (datoElm 2))
+ (r-novacio (itemElm 'c (datoElm (lnumnovacia 1 (lnumnovacia 2 (lnumnovacia 3 (lnumvacia))))))(r-vacio)))))
+
+(define registro2
+  (r-vacio ))
+
+(define buscar-llave
+  (lambda (registro llave) 
+    (cond
+      [(equal? (r-novacio? registro) r-vacio)
+       (eopl:error "No encuentro el registro")]
+      [else
+       (if (equal? llave (itemElm->key(r-novacio->item registro)))
+           (datoElm->elemento(itemElm->dato(r-novacio->item registro)))
+           (buscar-llave (r-novacio->reg registro) llave))])))
+
+(buscar-llave registro1 'a)
