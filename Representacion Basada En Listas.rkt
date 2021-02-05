@@ -2,8 +2,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Autores:  Jenny Carolina Tangarife, 1765553. | Stivens Posada Trujillo, 1556051. | Nelson Galeano, 1958956. |  Diego Toro Florez, 1859942.      ;;
 ;; Fecha de creacion: 28/01/2021                                                                                                                   ;;                                                                   ;;
-;; Proposito: Crear mediante la representacon basada en listas crear funciones que nos permitan indexar una lista de registros mediante una llave, ;;
-;;            saber si un registro contiene lista de registros y si no contiene.                                                                   ;;
+;; Proposito: Crear funciones mediante la representacon basada en listas, de acuerdo a la gramatica dada, que nos permitan crear una lista de      ;;
+;;            registros con su respectiva llave, saber si un registro contiene lista de registros o si no contiene para retornalas.                                ;;
+;;                                                                                                                                                 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Definicion
 
@@ -176,7 +177,7 @@
 
 (define registro5 (r-novacio (itemElm 'a (datoElm 4))
                              (r-novacio (itemElm 'c (datoElm 5))
-                                        (r-novacio (itemElm 'r (datoElm (lsymnovacia 'a (lsymnovacia 'v (lsymnovacia 'b (lsymvacia))))))
+                                        (r-novacio (itemElm 'r (datoElm '(lsymnovacia 'Jenny(lsymnovacia 'Stivens (lsymnovacia 'Nelson (lsymnovacia 'Diego (lsymvacia)))))))
                                                    (r-vacio)))))
 
 
@@ -210,7 +211,7 @@
 ;;Autores: Jenny Carolina Tangarife, 1765553. | Stivens Posada Trujillo, 1556051. | Nelson Galeano, 1958956. |  Diego Toro Florez, 1859942.
 ;;Fecha de creacion: 28/01/2021
 ;;Contrato: buscar-listas: registro -> Lista de registros(lista de numeros | lista de simbolos)
-;;Proposito:buscar los datos de un item los cuales contienen listas de simbolos o numeros
+;;Proposito:Construir una lista que contiene todos los datos que son listas de simbolos o listas de números.
 ;;Ejemplo:
 ;;(display(buscar-listas registro4)) -> ((lnumnovacia 1 (lnumnovacia 2 (lnumnovacia 3 (lnumvacia)))) ((lnumnovacia 8 (lnumnovacia 6 (lnumnovacia 3 (lnumvacia)))) ()))
 
@@ -230,9 +231,9 @@
 ;;Autores: Jenny Carolina Tangarife, 1765553. | Stivens Posada Trujillo, 1556051. | Nelson Galeano, 1958956. |  Diego Toro Florez, 1859942.
 ;;Fecha de creacion: 28/01/2021
 ;;Contrato: buscar-nolistas: registro-> (simbolo | numero )
-;;Proposito: buscar los datos de un item los cuales no contienen listas de simbolos o numeros
+;;Proposito: Construir una lista que contiene todos los datos que no son listas de simbolos o listas de números.
 ;;Ejemplo:
-;; (display(buscar-llave registro1 'c)) -> (lnumnovacia 1 (lnumnovacia 2 (lnumnovacia 3 (lnumvacia))))
+;; (display(buscar-llave registro1)) -> (1 (2 ()))
 
 (define buscar-nolistas
   (lambda (reg)
